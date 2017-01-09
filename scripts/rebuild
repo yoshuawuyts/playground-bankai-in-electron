@@ -1,0 +1,9 @@
+#!/bin/sh
+
+electron_version="$(electron --version | sed s/v//)"
+electron_abi="$(electron --abi)"
+npm rebuild \
+  --runtime=electron \
+  --target="$electron_version" \
+  --disturl=https://atom.io/download/atom-shell \
+  --abi="$electron_abi" > /dev/null

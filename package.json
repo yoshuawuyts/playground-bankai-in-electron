@@ -1,0 +1,27 @@
+{
+  "name": "playground-bankai-in-electron",
+  "description": "Bankai in Electron experiment",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "deps": "dependency-check . && dependency-check . --extra --no-dev",
+    "rebuild": "./scripts/rebuild",
+    "start": "NODE_ENV=development electron .",
+    "test": "standard && npm run deps"
+  },
+  "dependencies": {
+    "bankai": "^5.2.1",
+    "choo": "^4.0.3",
+    "choo-log": "^3.0.0",
+    "electron": "^1.4.13",
+    "electron-default-menu": "^1.0.0",
+    "electron-window": "^0.8.1",
+    "merry": "^3.0.2",
+    "sheetify": "^6.0.1",
+    "tachyons": "^4.6.1"
+  },
+  "devDependencies": {
+    "dependency-check": "^2.7.0",
+    "standard": "^8.6.0"
+  }
+}
