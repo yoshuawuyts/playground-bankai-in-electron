@@ -33,20 +33,21 @@ app.on('ready', function () {
 function renderDevelopment (mainWindow) {
   var clientPath = path.join(__dirname, 'renderer.js')
   var indexPath = 'http://localhost:8080'
-
   var assets = bankai(clientPath)
   var server = merry()
+
   server.router([
     [ '/', _merryAssets(assets.html.bind(assets)) ],
     [ '/bundle.js', _merryAssets(assets.js.bind(assets)) ],
     [ '/bundle.css', _merryAssets(assets.css.bind(assets)) ]
   ])
-  server.listen(env.PORT)
 
-  mainWindow.showUrl(indexPath, function () {
-    var menu = Menu.buildFromTemplate(defaultMenu(app, shell))
-    Menu.setApplicationMenu(menu)
-    mainWindow.webContents.openDevTools()
+  server.listen(env.PORT, function () {
+    mainWindow.showUrl(indexPath, function () {
+      var menu = Menu.buildFromTemplate(defaultMenu(app, shell))
+      Menu.setApplicationMenu(menu)
+      mainWindow.webContents.openDevTools()
+    })
   })
 }
 
