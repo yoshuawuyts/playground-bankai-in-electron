@@ -9,7 +9,7 @@ var shell = electron.shell
 var Menu = electron.Menu
 var app = electron.app
 
-const windowStyles = {
+var windowStyles = {
   width: 800,
   height: 600,
   minWidth: 640,
@@ -23,41 +23,40 @@ var env = merry.env({
 
 app.on('ready', function () {
   var mainWindow = electronWindow.createWindow(windowStyles)
-
   if (env.NODE_ENV === 'development') {
     renderDevelopment(mainWindow)
   } else {
     renderProduction(mainWindow)
   }
-
-  function renderDevelopment (mainWindow) {
-    var clientPath = path.join(__dirname, 'renderer.js')
-    var indexPath = 'http://localhost:8080'
-
-    var assets = bankai(clientPath)
-    var server = merry()
-    server.router([
-      [ '/', _merryAssets(assets.html.bind(assets)) ],
-      [ '/bundle.js', _merryAssets(assets.js.bind(assets)) ],
-      [ '/bundle.css', _merryAssets(assets.css.bind(assets)) ]
-    ])
-    server.listen(env.PORT)
-
-    mainWindow.showUrl(indexPath, function () {
-      var menu = Menu.buildFromTemplate(defaultMenu(app, shell))
-      Menu.setApplicationMenu(menu)
-      mainWindow.webContents.openDevTools()
-    })
-  }
-
-  function renderProduction (mainWindow) {
-    var indexPath = path.join(__dirname, 'dist/index.html')
-    mainWindow.showUrl(indexPath, function () {
-      var menu = Menu.buildFromTemplate(defaultMenu(app, shell))
-      Menu.setApplicationMenu(menu)
-    })
-  }
 })
+
+function renderDevelopment (mainWindow) {
+  var clientPath = path.join(__dirname, 'renderer.js')
+  var indexPath = 'http://localhost:8080'
+
+  var assets = bankai(clientPath)
+  var server = merry()
+  server.router([
+    [ '/', _merryAssets(assets.html.bind(assets)) ],
+    [ '/bundle.js', _merryAssets(assets.js.bind(assets)) ],
+    [ '/bundle.css', _merryAssets(assets.css.bind(assets)) ]
+  ])
+  server.listen(env.PORT)
+
+  mainWindow.showUrl(indexPath, function () {
+    var menu = Menu.buildFromTemplate(defaultMenu(app, shell))
+    Menu.setApplicationMenu(menu)
+    mainWindow.webContents.openDevTools()
+  })
+}
+
+function renderProduction (mainWindow) {
+  var indexPath = path.join(__dirname, 'dist/index.html')
+  mainWindow.showUrl(indexPath, function () {
+    var menu = Menu.buildFromTemplate(defaultMenu(app, shell))
+    Menu.setApplicationMenu(menu)
+  })
+}
 
 function _merryAssets (assets) {
   return function (req, res, ctx, done) {
