@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "build": "NODE_ENV=production bankai build -O && build --dir",
     "deps": "dependency-check . && dependency-check . --extra --no-dev",
     "rebuild": "./scripts/rebuild",
     "start": "NODE_ENV=development electron .",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "dependency-check": "^2.7.0",
+    "electron-builder": "^11.2.0",
     "standard": "^8.6.0"
   }
 }
