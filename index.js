@@ -1,7 +1,6 @@
 var defaultMenu = require('electron-default-menu')
 var electronWindow = require('electron-window')
 var electron = require('electron')
-var bankai = require('bankai')
 var merry = require('merry')
 var path = require('path')
 
@@ -31,7 +30,8 @@ app.on('ready', function () {
 })
 
 function renderDevelopment (mainWindow) {
-  var clientPath = path.join(__dirname, 'renderer.js')
+  var bankai = require('bankai')
+  var clientPath = path.join(__dirname, 'client.js')
   var indexPath = 'http://localhost:8080'
   var assets = bankai(clientPath)
   var server = merry()
